@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>datum</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/d3/3.4.8/d3.min.js"></script>
+	<script type="text/javascript">
+	window.onload = function() {
+		var body = d3.select("body");
+
+		var p = body.selectAll("p");
+
+		p.style("color", "red");
+
+		var p1 = body.select("p");  // The 1st p element
+
+		p1.style("font-size", "30px");
+
+		var p_myid = body.select("#myid");  // The p element with specified id
+		p_myid.style("font-size", "45px");
+
+		var p_myclass = body.selectAll(".myclass"); // The p element with specified class
+		p_myclass.style("font-size", "60px");
+
+		// Append an element
+		body.append("p").text("append a p element");
+
+		// insert an element
+		body.insert("p", "#myid").text("Insert a p element after #myid");
+
+		// Remove an element
+		//p_myid.remove();
+	}
+	</script>
+</head>
+<body>
+<p>Hello World 1</p>
+<p>Hello World 2</p>
+<p id="myid">Hello World 3</p>
+<p class="myclass">Hello World 4</p>
+<p class="myclass">Hello World 5</p>
+</body>
+</html>
