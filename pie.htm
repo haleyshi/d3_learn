@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pie</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/d3/3.4.8/d3.min.js"></script>
+	<script type="text/javascript">
+	window.onload = function() {
+		var dataset = [20, 10, 43, 55, 13];
+		var width = 400;
+		var height = 400;
+
+		var pie = d3.layout.pie();
+		var piedata = pie(dataset);
+
+		var outerRadius = 150; //外半径
+		var innerRadius = 0;   //内半径，0代表中间没有空白
+
+		var color = d3.scale.category10(); //有10种颜色的颜色比例尺
+
+		var svg = d3.select("body")
+					.append("svg")
+					.attr("width", width)
+					.attr("height", height);
+
+		var arc = d3.svg.arc()  //弧生成器
+					.innerRadius(innerRadius) //设置外半径
+					.outerRadius(outerRadius);//设置内半径
+
+		var arcs = svg.selectAll("g")
+						.data(piedata)
+						.enter()
+						.append("g")
+						.attr("transform", "translate(" + width/2 + "," + width/2 + ")");
+
+		arcs.append("path")
+			.attr("fill", function(d, i) {
+				return color(i);
+			})
+			.attr("d", function(d) {
+				return arc(d);
+			});
+
+		arcs.append("text")
+			.attr("transform", function(d) {
+				return "translate(" + arc.centroid(d) + ")";
+			})
+			.attr("text-anchor", "middle")
+			.text(function(d) {
+				return d.data;
+			});
+	}
+	</script>
+</head>
+<body>
+
+</body>
+</html>
