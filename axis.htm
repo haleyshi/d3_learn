@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Axis</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/d3/3.4.8/d3.min.js"></script>
+
+	<style type="text/css">
+	.axis path,
+	.axis line{
+	    fill: none;
+	    stroke: black;
+	    shape-rendering: crispEdges;
+	}
+
+	.axis text {
+	    font-family: sans-serif;
+	    font-size: 11px;
+	}
+	</style>
+
+	<script type="text/javascript">
+	window.onload = function() {
+		var width= 300;
+		var height = 300;
+
+		var left = 10;
+		var rectHeight = 25;
+
+		var svg = d3.select("body")
+					.append("svg")
+					.attr("width", width)
+					.attr("height", height);
+
+		var dataset = [3.2, 0.63, 2.7, 1.35, 1.2];
+
+		//var min = d3.min(dataset);
+		var max = d3.max(dataset);
+
+		// Linear Scale
+		var linear = d3.scale.linear()
+						.domain([0, max])
+						.range([0, width-left-5]);
+
+		var index = [0, 1, 2, 3, 4];
+		var color = ["red", "steelblue", "lightgreen", "yellow", "purple"];
+
+		// Ordinal Scale
+		var ordinal = d3.scale.ordinal()
+						.domain(index)
+						.range(color);
+
+		// Axis
+		var axis = d3.svg.axis()
+							.scale(linear)     // 比例尺
+							.orient("bottom")  // 刻度的方向
+							.ticks(7);         // 刻度的数量
+
+		svg.selectAll("rect") //
+			.data(dataset)    //
+			.enter()          //
+			.append("rect")   // Add enough rect and equal to the length of dataset
+			.attr("x", left)
+			.attr("y", function(d, i) {
+				return i * rectHeight;
+			})
+			.attr("width", function(d) {
+				return linear(d);
+			})
+			.attr("height", rectHeight-2)
+			.attr("fill", function(d, i) {
+				return ordinal(i);
+			});
+
+		svg.append("g").attr("class", "axis")
+						.attr("transform", "translate(" + left + ", " + (dataset.length * rectHeight + 5) + ")")    // translate(left, top)
+						.call(axis);
+	}
+	</script>
+</head>
+<body>
+
+</body>
+</html>

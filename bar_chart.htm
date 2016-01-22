@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bar Chart</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/d3/3.4.8/d3.min.js"></script>
+	<script type="text/javascript">
+	window.onload = function() {
+		var width= 300;
+		var height = 300;
+
+		var svg = d3.select("body")
+					.append("svg")
+					.attr("width", width)
+					.attr("height", height);
+
+		var dataset = [250, 120, 170, 230, 90];
+
+		var rectHeight = 25;
+
+		svg.selectAll("rect") //
+			.data(dataset)    //
+			.enter()          //
+			.append("rect")   // Add enough rect and equal to the length of dataset
+			.attr("x", 20)
+			.attr("y", function(d, i) {
+				return i * rectHeight;
+			})
+			.attr("width", function(d) {
+				return d;
+			})
+			.attr("height", rectHeight-2)
+			.attr("fill", "steelblue");
+	}
+	</script>
+</head>
+<body>
+
+</body>
+</html>
